@@ -1,19 +1,36 @@
 .p-CocktailDetailPage {
   width: min(100%, 1126px);
-  padding: 32px;
+  padding: 40px 32px 56px;
   box-sizing: border-box;
   text-align: left;
 
+  &__topBar {
+    display: flex;
+    gap: 24px;
+    align-items: center;
+    margin-bottom: 24px;
+  }
+
   &__backLink {
     display: inline-flex;
-    margin-bottom: 24px;
+    gap: 8px;
+    align-items: center;
+    padding: 8px 12px;
+    border: 1px solid var(--border);
+    border-radius: 6px;
     color: var(--text-h);
+    text-decoration: none;
+    background: var(--surface);
+
+    &:hover {
+      border-color: var(--accent-border);
+    }
   }
 
   &__content {
     display: grid;
-    grid-template-columns: minmax(260px, 420px) 1fr;
-    gap: 32px;
+    grid-template-columns: minmax(280px, 430px) minmax(0, 1fr);
+    gap: 36px;
     align-items: start;
   }
 
@@ -21,15 +38,24 @@
     display: block;
     width: 100%;
     border-radius: 8px;
+    box-shadow: var(--shadow);
     object-fit: cover;
   }
 
   &__details {
     min-width: 0;
+    padding: 4px 0;
+  }
+
+  &__meta {
+    margin-top: 10px;
+    color: var(--accent);
+    font-weight: 650;
   }
 
   &__section {
-    margin-top: 28px;
+    max-width: 640px;
+    margin-top: 30px;
   }
 
   &__ingredients {
@@ -41,24 +67,29 @@
   }
 
   &__ingredient {
-    display: flex;
-    justify-content: space-between;
+    display: grid;
+    grid-template-columns: 1fr auto;
     gap: 16px;
-    padding-bottom: 8px;
+    padding: 10px 0;
     border-bottom: 1px solid var(--border);
+
+    span:first-child {
+      color: var(--text-h);
+      font-weight: 600;
+    }
   }
 }
 
 @media (max-width: 760px) {
   .p-CocktailDetailPage {
-    padding: 20px;
+    padding: 24px 20px 40px;
 
     &__content {
       grid-template-columns: 1fr;
     }
 
     &__ingredient {
-      flex-direction: column;
+      grid-template-columns: 1fr;
       gap: 2px;
     }
   }

@@ -34,14 +34,20 @@ const CocktailDetailPage = () => {
   const { data: cocktail, error, isError, isLoading } =
     useCocktailById(cocktailId);
   const ingredients = cocktail ? getIngredients(cocktail) : [];
+  const cocktailMeta = cocktail
+    ? [cocktail.strCategory, cocktail.strGlass].filter(Boolean)
+    : [];
 
   return (
     <main className={className}>
-      <Link className={`${className}__backLink`} to="/">
-        Back to search
-      </Link>
+      <div className={`${className}__topBar`}>
+        <Link className={`${className}__backLink`} to="/">
+          <span aria-hidden="true">←</span>
+          Back to search
+        </Link>
 
-      {isLoading && <LoadingSpinner />}
+        {isLoading && <LoadingSpinner />}
+      </div>
       {isError && <p>{error.message}</p>}
       {!isLoading && !isError && !cocktail && <p>Cocktail not found.</p>}
 
@@ -54,6 +60,9 @@ const CocktailDetailPage = () => {
           />
           <div className={`${className}__details`}>
             <h1>{cocktail.strDrink}</h1>
+            {cocktailMeta.length > 0 && (
+              <p className={`${className}__meta`}>{cocktailMeta.join(" / ")}</p>
+            )}
 
             <section className={`${className}__section`}>
               <h2>Ingredients</h2>

@@ -1,7 +1,8 @@
 .c-LoadingSpinner {
   display: inline-flex;
-  gap: 8px;
+  gap: 12px;
   align-items: center;
+  line-height: 1;
   color: var(--text-h);
 
   &__emoji {
@@ -14,6 +15,7 @@
 
   &__label {
     font-size: 16px;
+    line-height: 1;
   }
 }
 

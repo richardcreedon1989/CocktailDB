@@ -1,17 +1,27 @@
 .c-CocktailGrid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-  gap: 20px;
+  grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+  gap: 18px;
   padding: 0;
-  margin: 20px 0 0;
+  margin: 18px 0 0;
   list-style: none;
 
   &__card {
     overflow: hidden;
     border: 1px solid var(--border);
     border-radius: 8px;
-    background: var(--bg);
-    box-shadow: var(--shadow);
+    background: var(--surface);
+    box-shadow: rgba(34, 25, 16, 0.05) 0 8px 20px;
+    transition:
+      border-color 160ms ease,
+      transform 160ms ease,
+      box-shadow 160ms ease;
+
+    &:hover {
+      border-color: var(--accent-border);
+      transform: translateY(-2px);
+      box-shadow: var(--shadow);
+    }
 
     &:focus-within {
       outline: 3px solid var(--accent);
@@ -43,9 +53,19 @@
   }
 
   &__title {
-    padding: 12px;
+    display: flex;
+    align-items: center;
+    min-height: 58px;
+    padding: 12px 14px;
     margin: 0;
     font-size: 18px;
     line-height: 1.25;
+  }
+}
+
+@media (max-width: 520px) {
+  .c-CocktailGrid {
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 14px;
   }
 }

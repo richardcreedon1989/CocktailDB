@@ -1,7 +1,28 @@
 .p-LandingPage {
   width: min(100%, 1126px);
-  padding: 32px;
+  padding: 40px 32px 56px;
   box-sizing: border-box;
+
+  &__header {
+    max-width: 680px;
+    margin-bottom: 28px;
+    text-align: left;
+  }
+
+  &__eyebrow {
+    margin-bottom: 8px;
+    font-size: 14px;
+    font-weight: 750;
+    letter-spacing: 0.08em;
+    color: var(--accent);
+    text-transform: uppercase;
+  }
+
+  &__intro {
+    max-width: 560px;
+    margin-top: 10px;
+    font-size: 18px;
+  }
 
   &__controls {
     display: flex;
@@ -9,9 +30,12 @@
     gap: 16px;
     align-items: center;
     justify-content: space-between;
-    padding-bottom: 28px;
+    padding: 18px;
     margin-bottom: 40px;
-    border-bottom: 1px solid var(--border);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    background: var(--surface);
+    box-shadow: var(--shadow);
   }
 
   &__searchControls,
@@ -21,15 +45,20 @@
   }
 
   &__randomButton {
-    min-height: 44px;
-    padding: 0 16px;
-    border: 1px solid var(--accent-border);
+    min-height: 46px;
+    padding: 0 18px;
+    border: 1px solid var(--secondary-border);
     border-radius: 6px;
     font: inherit;
-    color: var(--text-h);
-    background: var(--accent-bg);
+    font-weight: 650;
+    color: var(--secondary-text);
+    background: var(--secondary-bg);
     cursor: pointer;
     white-space: nowrap;
+
+    &:hover:not(:disabled) {
+      border-color: var(--secondary-text);
+    }
 
     &:disabled {
       cursor: not-allowed;
@@ -38,7 +67,7 @@
   }
 
   &__results {
-    margin-top: 40px;
+    margin-top: 36px;
     text-align: left;
   }
 
@@ -55,11 +84,27 @@
     flex-wrap: wrap;
     gap: 8px;
   }
+
+  &__message {
+    color: var(--text);
+  }
+
+  &__emptyState {
+    display: inline-flex;
+    gap: 10px;
+    align-items: center;
+    padding: 14px 16px;
+    margin-top: 14px;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    color: var(--text-h);
+    background: var(--surface-soft);
+  }
 }
 
 @media (max-width: 640px) {
   .p-LandingPage {
-    padding: 20px;
+    padding: 24px 20px 40px;
   }
 
   .p-LandingPage__controls {

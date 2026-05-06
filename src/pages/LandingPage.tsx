@@ -12,11 +12,11 @@ const className = "p-LandingPage";
 const LandingPage = () => {
   const [searchTerm, setSearchTerm] = useSessionStorageState(
     "cocktail-search-term",
-    "",
+    ""
   );
   const [submittedSearchTerm, setSubmittedSearchTerm] = useSessionStorageState(
     "cocktail-submitted-search-term",
-    "",
+    ""
   );
   const [randomCocktails, setRandomCocktails] = useSessionStorageState<
     Cocktail[]
@@ -35,12 +35,20 @@ const LandingPage = () => {
     isPending: isRandomCocktailsPending,
     mutateAsync: getRandomCocktails,
   } = useRandomCocktails();
+
   const hasNoResults =
     submittedSearchTerm.trim().length > 0 &&
     !isLoading &&
     !isError &&
     cocktails.length === 0;
+
+  const hasSubmittedSearch = submittedSearchTerm.trim().length > 0;
+  const shouldShowSearchResults =
+    hasSubmittedSearch || isLoading || isError || hasNoResults;
   const hasRandomCocktails = randomCocktails.length > 0;
+  const searchResultsHeading = `${cocktails.length} ${
+    cocktails.length === 1 ? "Cocktail" : "Cocktails"
+  } Found`;
 
   const handleGetRandomCocktails = async () => {
     const nextRandomCocktails = await getRandomCocktails();
@@ -53,6 +61,14 @@ const LandingPage = () => {
 
   return (
     <main className={className}>
+      <header className={`${className}__header`}>
+        <p className={`${className}__eyebrow`}>CocktailDB</p>
+        <h1>Find your next drink</h1>
+        <p className={`${className}__intro`}>
+          Search cocktail recipes or generate a few random serves.
+        </p>
+      </header>
+
       <section
         className={`${className}__controls`}
         aria-label="Cocktail search"
@@ -80,13 +96,25 @@ const LandingPage = () => {
         </div>
       </section>
 
-      <section className={`${className}__results`} aria-label="Search results">
-        <h1>Search results</h1>
-        {isLoading && <LoadingSpinner label="Searching" />}
-        {isError && <p>{error.message}</p>}
-        {hasNoResults && <p>Try again, no cocktails match.</p>}
-        <CocktailGrid cocktails={cocktails} />
-      </section>
+      {shouldShowSearchResults && (
+        <section
+          className={`${className}__results`}
+          aria-label="Search results"
+        >
+          <h2>{isLoading ? "Searching cocktails" : searchResultsHeading}</h2>
+          {isLoading && <LoadingSpinner label="Searching" />}
+          {isError && (
+            <p className={`${className}__message`}>{error.message}</p>
+          )}
+          {hasNoResults && (
+            <div className={`${className}__emptyState`}>
+              <span aria-hidden="true">🍸</span>
+              <p>Try again, no cocktails match.</p>
+            </div>
+          )}
+          <CocktailGrid cocktails={cocktails} />
+        </section>
+      )}
 
       {(hasRandomCocktails || isRandomCocktailsError) && (
         <section
@@ -95,7 +123,7 @@ const LandingPage = () => {
         >
           {hasRandomCocktails && (
             <div className={`${className}__resultsHeader`}>
-              <h1>Random cocktails</h1>
+              <h2>Random cocktails</h2>
               <div className={`${className}__resultsActions`}>
                 <button
                   className={`${className}__randomButton`}
@@ -119,7 +147,11 @@ const LandingPage = () => {
               </div>
             </div>
           )}
-          {isRandomCocktailsError && <p>{randomCocktailsError.message}</p>}
+          {isRandomCocktailsError && (
+            <p className={`${className}__message`}>
+              {randomCocktailsError.message}
+            </p>
+          )}
           <CocktailGrid cocktails={randomCocktails} />
         </section>
       )}
