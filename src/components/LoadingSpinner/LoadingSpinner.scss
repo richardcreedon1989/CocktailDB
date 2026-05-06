@@ -1,0 +1,28 @@
+.c-LoadingSpinner {
+  display: inline-flex;
+  gap: 8px;
+  align-items: center;
+  color: var(--text-h);
+
+  &__emoji {
+    display: inline-flex;
+    font-size: 24px;
+    line-height: 1;
+    transform-origin: 50% 60%;
+    animation: c-LoadingSpinner-spin 900ms linear infinite;
+  }
+
+  &__label {
+    font-size: 16px;
+  }
+}
+
+@keyframes c-LoadingSpinner-spin {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}

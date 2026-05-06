@@ -1,4 +1,5 @@
 import { Link, useParams } from "react-router-dom";
+import LoadingSpinner from "../../components/LoadingSpinner";
 import type { Cocktail } from "../../api/cocktails";
 import { useCocktailById } from "../../hooks/useCocktailById";
 import "./CocktailDetailPage.scss";
@@ -40,7 +41,7 @@ const CocktailDetailPage = () => {
         Back to search
       </Link>
 
-      {isLoading && <p>Loading...</p>}
+      {isLoading && <LoadingSpinner />}
       {isError && <p>{error.message}</p>}
       {!isLoading && !isError && !cocktail && <p>Cocktail not found.</p>}
 

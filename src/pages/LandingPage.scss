@@ -6,10 +6,18 @@
   &__controls {
     display: flex;
     flex-wrap: wrap;
-    gap: 12px;
+    gap: 16px;
     align-items: center;
-    justify-content: center;
+    justify-content: space-between;
+    padding-bottom: 28px;
     margin-bottom: 40px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  &__searchControls,
+  &__randomControls {
+    display: flex;
+    align-items: center;
   }
 
   &__randomButton {
@@ -21,6 +29,7 @@
     color: var(--text-h);
     background: var(--accent-bg);
     cursor: pointer;
+    white-space: nowrap;
 
     &:disabled {
       cursor: not-allowed;
@@ -56,6 +65,12 @@
   .p-LandingPage__controls {
     align-items: stretch;
     flex-direction: column;
+  }
+
+  .p-LandingPage__searchControls,
+  .p-LandingPage__randomControls,
+  .p-LandingPage__randomButton {
+    width: 100%;
   }
 
   .p-LandingPage__resultsHeader,

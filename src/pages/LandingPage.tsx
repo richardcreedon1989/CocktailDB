@@ -1,5 +1,6 @@
 import CocktailGrid from "../components/CocktailGrid";
 import type { Cocktail } from "../api/cocktails";
+import LoadingSpinner from "../components/LoadingSpinner";
 import SearchInput from "../components/SearchInput";
 import { useCocktailsByName } from "../hooks/useCocktailsByName";
 import { useRandomCocktails } from "../hooks/useRandomCocktails";
@@ -56,26 +57,32 @@ const LandingPage = () => {
         className={`${className}__controls`}
         aria-label="Cocktail search"
       >
-        <SearchInput
-          value={searchTerm}
-          setSearchTerm={setSearchTerm}
-          onSearch={() => setSubmittedSearchTerm(searchTerm)}
-        />
-        <button
-          className={`${className}__randomButton`}
-          type="button"
-          disabled={isRandomCocktailsPending}
-          onClick={handleGetRandomCocktails}
-        >
-          {isRandomCocktailsPending
-            ? "Generating..."
-            : "Generate three random cocktails"}
-        </button>
+        <div className={`${className}__searchControls`}>
+          <SearchInput
+            value={searchTerm}
+            setSearchTerm={setSearchTerm}
+            onSearch={() => setSubmittedSearchTerm(searchTerm)}
+          />
+        </div>
+        <div className={`${className}__randomControls`}>
+          <button
+            className={`${className}__randomButton`}
+            type="button"
+            disabled={isRandomCocktailsPending}
+            onClick={handleGetRandomCocktails}
+          >
+            {isRandomCocktailsPending ? (
+              <LoadingSpinner label="Generating" />
+            ) : (
+              "Generate random cocktails"
+            )}
+          </button>
+        </div>
       </section>
 
       <section className={`${className}__results`} aria-label="Search results">
         <h1>Search results</h1>
-        {isLoading && <p>Loading...</p>}
+        {isLoading && <LoadingSpinner label="Searching" />}
         {isError && <p>{error.message}</p>}
         {hasNoResults && <p>Try again, no cocktails match.</p>}
         <CocktailGrid cocktails={cocktails} />
@@ -96,7 +103,11 @@ const LandingPage = () => {
                   disabled={isRandomCocktailsPending}
                   onClick={handleGetRandomCocktails}
                 >
-                  {isRandomCocktailsPending ? "Loading..." : "See more"}
+                  {isRandomCocktailsPending ? (
+                    <LoadingSpinner label="Loading" />
+                  ) : (
+                    "See more"
+                  )}
                 </button>
                 <button
                   className={`${className}__randomButton`}

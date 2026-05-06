@@ -10,6 +10,8 @@ type SearchInputProps = {
 };
 
 const SearchInput = ({ value, setSearchTerm, onSearch }: SearchInputProps) => {
+  const isSearchDisabled = value.trim().length === 0;
+
   return (
     <form
       className={className}
@@ -25,7 +27,11 @@ const SearchInput = ({ value, setSearchTerm, onSearch }: SearchInputProps) => {
         value={value}
         onChange={(event) => setSearchTerm(event.target.value)}
       />
-      <button className={`${className}__button`} type="submit">
+      <button
+        className={`${className}__button`}
+        type="submit"
+        disabled={isSearchDisabled}
+      >
         Search
       </button>
     </form>

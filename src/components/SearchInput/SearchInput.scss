@@ -1,6 +1,8 @@
 .c-SearchInput {
-  display: flex;
-  min-width: min(100%, 420px);
+  display: grid;
+  grid-template-columns: minmax(220px, 340px) auto;
+  width: fit-content;
+  max-width: 100%;
   gap: 8px;
 
   &__input {
@@ -34,7 +36,13 @@
 
 @media (max-width: 640px) {
   .c-SearchInput {
-    align-items: stretch;
-    flex-direction: column;
+    grid-template-columns: 1fr auto;
+    width: 100%;
+  }
+}
+
+@media (max-width: 420px) {
+  .c-SearchInput {
+    grid-template-columns: 1fr;
   }
 }
