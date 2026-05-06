@@ -15,6 +15,10 @@ type SearchCocktailsResponse = {
   drinks: Cocktail[] | null;
 };
 
+type RandomCocktailResponse = {
+  drinks: Cocktail[];
+};
+
 export const searchCocktailsByName = async (name: string) => {
   try {
     const response = await axiosInstance.get<SearchCocktailsResponse>(
@@ -31,4 +35,24 @@ export const searchCocktailsByName = async (name: string) => {
     console.error("Error searching cocktails by name:", error);
     throw error;
   }
+};
+
+export const getRandomCocktail = async () => {
+  try {
+    const response =
+      await axiosInstance.get<RandomCocktailResponse>("/random.php");
+
+    return response.data.drinks[0];
+  } catch (error) {
+    console.error("Error getting random cocktail:", error);
+    throw error;
+  }
+};
+
+export const getThreeRandomCocktails = async () => {
+  return Promise.all([
+    getRandomCocktail(),
+    getRandomCocktail(),
+    getRandomCocktail(),
+  ]);
 };
