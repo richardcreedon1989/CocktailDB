@@ -3,18 +3,26 @@ import type { Dispatch, SetStateAction } from "react";
 type SearchInputProps = {
   value: string;
   setSearchTerm: Dispatch<SetStateAction<string>>;
+  onSearch: () => void;
 };
 
-const SearchInput = ({ value, setSearchTerm }: SearchInputProps) => {
+const SearchInput = ({ value, setSearchTerm, onSearch }: SearchInputProps) => {
   return (
-    <div className="search-input">
+    <form
+      className="search-input"
+      onSubmit={(event) => {
+        event.preventDefault();
+        onSearch();
+      }}
+    >
       <input
         type="text"
         placeholder="Search for cocktails..."
         value={value}
         onChange={(event) => setSearchTerm(event.target.value)}
       />
-    </div>
+      <button type="submit">Search</button>
+    </form>
   );
 };
 
