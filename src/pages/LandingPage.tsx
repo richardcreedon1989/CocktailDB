@@ -3,21 +3,31 @@ import type { Cocktail } from "../api/cocktails";
 import SearchInput from "../components/SearchInput";
 import { useCocktailsByName } from "../hooks/useCocktailsByName";
 import { useRandomCocktails } from "../hooks/useRandomCocktails";
-import { useState } from "react";
+import { useSessionStorageState } from "../hooks/useSessionStorageState";
 import "./LandingPage.scss";
 
 const className = "p-LandingPage";
 
 const LandingPage = () => {
-  const [searchTerm, setSearchTerm] = useState("");
-  const [submittedSearchTerm, setSubmittedSearchTerm] = useState("");
-  const [randomCocktails, setRandomCocktails] = useState<Cocktail[]>([]);
+  const [searchTerm, setSearchTerm] = useSessionStorageState(
+    "cocktail-search-term",
+    "",
+  );
+  const [submittedSearchTerm, setSubmittedSearchTerm] = useSessionStorageState(
+    "cocktail-submitted-search-term",
+    "",
+  );
+  const [randomCocktails, setRandomCocktails] = useSessionStorageState<
+    Cocktail[]
+  >("cocktail-random-cocktails", []);
+
   const {
     data: cocktails = [],
     error,
     isError,
     isLoading,
   } = useCocktailsByName(submittedSearchTerm);
+
   const {
     error: randomCocktailsError,
     isError: isRandomCocktailsError,

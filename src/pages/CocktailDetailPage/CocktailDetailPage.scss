@@ -1,0 +1,65 @@
+.p-CocktailDetailPage {
+  width: min(100%, 1126px);
+  padding: 32px;
+  box-sizing: border-box;
+  text-align: left;
+
+  &__backLink {
+    display: inline-flex;
+    margin-bottom: 24px;
+    color: var(--text-h);
+  }
+
+  &__content {
+    display: grid;
+    grid-template-columns: minmax(260px, 420px) 1fr;
+    gap: 32px;
+    align-items: start;
+  }
+
+  &__image {
+    display: block;
+    width: 100%;
+    border-radius: 8px;
+    object-fit: cover;
+  }
+
+  &__details {
+    min-width: 0;
+  }
+
+  &__section {
+    margin-top: 28px;
+  }
+
+  &__ingredients {
+    display: grid;
+    gap: 8px;
+    padding: 0;
+    margin: 16px 0 0;
+    list-style: none;
+  }
+
+  &__ingredient {
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--border);
+  }
+}
+
+@media (max-width: 760px) {
+  .p-CocktailDetailPage {
+    padding: 20px;
+
+    &__content {
+      grid-template-columns: 1fr;
+    }
+
+    &__ingredient {
+      flex-direction: column;
+      gap: 2px;
+    }
+  }
+}

@@ -1,3 +1,4 @@
+import { useNavigate } from "react-router-dom";
 import type { Cocktail } from "../../api/cocktails";
 import "./CocktailGrid.scss";
 
@@ -8,6 +9,8 @@ type CocktailGridProps = {
 };
 
 const CocktailGrid = ({ cocktails }: CocktailGridProps) => {
+  const navigate = useNavigate();
+
   if (cocktails.length === 0) {
     return null;
   }
@@ -23,6 +26,7 @@ const CocktailGrid = ({ cocktails }: CocktailGridProps) => {
             className={`${className}__button`}
             type="button"
             aria-label={`View details for ${cocktail.strDrink}`}
+            onClick={() => navigate(`/cocktails/${cocktail.idDrink}`)}
           >
             <img
               className={`${className}__image`}
