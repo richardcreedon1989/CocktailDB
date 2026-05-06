@@ -1,0 +1,40 @@
+.c-SearchInput {
+  display: flex;
+  min-width: min(100%, 420px);
+  gap: 8px;
+
+  &__input {
+    width: 100%;
+    min-height: 44px;
+    padding: 0 14px;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    box-sizing: border-box;
+    font: inherit;
+    color: var(--text-h);
+    background: var(--bg);
+  }
+
+  &__button {
+    min-height: 44px;
+    padding: 0 16px;
+    border: 1px solid var(--accent-border);
+    border-radius: 6px;
+    font: inherit;
+    color: var(--text-h);
+    background: var(--accent-bg);
+    cursor: pointer;
+
+    &:disabled {
+      cursor: not-allowed;
+      opacity: 0.6;
+    }
+  }
+}
+
+@media (max-width: 640px) {
+  .c-SearchInput {
+    align-items: stretch;
+    flex-direction: column;
+  }
+}

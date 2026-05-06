@@ -1,0 +1,51 @@
+.c-CocktailGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 20px;
+  padding: 0;
+  margin: 20px 0 0;
+  list-style: none;
+
+  &__card {
+    overflow: hidden;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    background: var(--bg);
+    box-shadow: var(--shadow);
+
+    &:focus-within {
+      outline: 3px solid var(--accent);
+      outline-offset: 3px;
+    }
+  }
+
+  &__button {
+    display: block;
+    width: 100%;
+    padding: 0;
+    border: 0;
+    font: inherit;
+    text-align: left;
+    color: inherit;
+    background: transparent;
+    cursor: pointer;
+  }
+
+  &__button:focus-visible {
+    outline: 0;
+  }
+
+  &__image {
+    display: block;
+    width: 100%;
+    aspect-ratio: 1;
+    object-fit: cover;
+  }
+
+  &__title {
+    padding: 12px;
+    margin: 0;
+    font-size: 18px;
+    line-height: 1.25;
+  }
+}
