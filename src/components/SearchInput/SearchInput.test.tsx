@@ -18,7 +18,7 @@ describe("SearchInput", () => {
 
     await user.type(
       screen.getByPlaceholderText("Search for cocktails..."),
-      "margarita",
+      "margarita"
     );
     await user.click(screen.getByRole("button", { name: "Search" }));
 

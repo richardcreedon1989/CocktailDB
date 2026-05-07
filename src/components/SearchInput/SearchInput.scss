@@ -1,8 +1,6 @@
 .c-SearchInput {
   display: grid;
   grid-template-columns: minmax(220px, 340px) auto;
-  width: fit-content;
-  max-width: 100%;
   gap: 8px;
 
   &__input {
@@ -31,7 +29,6 @@
     font: inherit;
     color: #ffffff;
     background: var(--accent);
-    cursor: pointer;
 
     &:hover:not(:disabled) {
       background: var(--accent-strong);

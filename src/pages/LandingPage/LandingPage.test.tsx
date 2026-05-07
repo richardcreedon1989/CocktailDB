@@ -2,16 +2,16 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { render, screen } from "@testing-library/react";
 import { MemoryRouter } from "react-router-dom";
 import { beforeEach, describe, expect, it, vi } from "vitest";
-import type { Cocktail } from "../api/cocktails";
-import { useCocktailsByName } from "../hooks/useCocktailsByName";
-import { useRandomCocktails } from "../hooks/useRandomCocktails";
+import type { Cocktail } from "../../api/cocktails";
+import { useCocktailsByName } from "../../hooks/useCocktailsByName";
+import { useRandomCocktails } from "../../hooks/useRandomCocktails";
 import LandingPage from "./LandingPage";
 
-vi.mock("../hooks/useCocktailsByName", () => ({
+vi.mock("../../hooks/useCocktailsByName", () => ({
   useCocktailsByName: vi.fn(),
 }));
 
-vi.mock("../hooks/useRandomCocktails", () => ({
+vi.mock("../../hooks/useRandomCocktails", () => ({
   useRandomCocktails: vi.fn(),
 }));
 
@@ -46,7 +46,11 @@ const renderLandingPage = (initialUrl = "/") => {
   return render(
     <QueryClientProvider client={queryClient}>
       <MemoryRouter initialEntries={[initialUrl]}>
-        <LandingPage randomCocktails={[]} setRandomCocktails={vi.fn()} />
+        <LandingPage
+          randomCocktails={[]}
+          addRandomCocktails={vi.fn()}
+          clearRandomCocktails={vi.fn()}
+        />
       </MemoryRouter>
     </QueryClientProvider>,
   );

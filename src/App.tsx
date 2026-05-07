@@ -8,6 +8,17 @@ import LandingPage from "./pages/LandingPage";
 function App() {
   const [randomCocktails, setRandomCocktails] = useState<Cocktail[]>([]);
 
+  const addRandomCocktails = (cocktails: Cocktail[]) => {
+    setRandomCocktails((currentCocktails) => [
+      ...currentCocktails,
+      ...cocktails,
+    ]);
+  };
+
+  const clearRandomCocktails = () => {
+    setRandomCocktails([]);
+  };
+
   return (
     <BrowserRouter>
       <Routes>
@@ -16,7 +27,8 @@ function App() {
           element={
             <LandingPage
               randomCocktails={randomCocktails}
-              setRandomCocktails={setRandomCocktails}
+              addRandomCocktails={addRandomCocktails}
+              clearRandomCocktails={clearRandomCocktails}
             />
           }
         />

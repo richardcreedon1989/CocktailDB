@@ -26,19 +26,20 @@ describe("CocktailGrid", () => {
             element={<p>Cocktail detail page</p>}
           />
         </Routes>
-      </MemoryRouter>,
+      </MemoryRouter>
     );
 
     expect(
-      screen.getByRole("button", { name: "View details for Margarita" }),
+      screen.getByRole("button", { name: "View details for Margarita" })
     ).toBeInTheDocument();
+
     expect(screen.getByRole("img", { name: "Margarita" })).toHaveAttribute(
       "src",
-      "https://example.com/margarita.jpg",
+      "https://example.com/margarita.jpg"
     );
 
     await user.click(
-      screen.getByRole("button", { name: "View details for Margarita" }),
+      screen.getByRole("button", { name: "View details for Margarita" })
     );
 
     expect(screen.getByText("Cocktail detail page")).toBeInTheDocument();

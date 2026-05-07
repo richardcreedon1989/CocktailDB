@@ -1,10 +1,9 @@
-import CocktailGrid from "../components/CocktailGrid";
-import type { Cocktail } from "../api/cocktails";
-import LoadingSpinner from "../components/LoadingSpinner";
-import SearchInput from "../components/SearchInput";
-import { useCocktailsByName } from "../hooks/useCocktailsByName";
-import { useRandomCocktails } from "../hooks/useRandomCocktails";
-import type { Dispatch, SetStateAction } from "react";
+import CocktailGrid from "../../components/CocktailGrid";
+import type { Cocktail } from "../../api/cocktails";
+import LoadingSpinner from "../../components/LoadingSpinner";
+import SearchInput from "../../components/SearchInput";
+import { useCocktailsByName } from "../../hooks/useCocktailsByName";
+import { useRandomCocktails } from "../../hooks/useRandomCocktails";
 import { useSearchParams } from "react-router-dom";
 import "./LandingPage.scss";
 
@@ -12,12 +11,14 @@ const className = "p-LandingPage";
 
 type LandingPageProps = {
   randomCocktails: Cocktail[];
-  setRandomCocktails: Dispatch<SetStateAction<Cocktail[]>>;
+  addRandomCocktails: (cocktails: Cocktail[]) => void;
+  clearRandomCocktails: () => void;
 };
 
 const LandingPage = ({
   randomCocktails,
-  setRandomCocktails,
+  addRandomCocktails,
+  clearRandomCocktails,
 }: LandingPageProps) => {
   const [searchParams, setSearchParams] = useSearchParams();
   const searchedCocktailName = searchParams.get("search") ?? "";
@@ -51,10 +52,7 @@ const LandingPage = ({
   const handleGetRandomCocktails = async () => {
     const nextRandomCocktails = await getRandomCocktails();
 
-    setRandomCocktails((currentRandomCocktails) => [
-      ...currentRandomCocktails,
-      ...nextRandomCocktails,
-    ]);
+    addRandomCocktails(nextRandomCocktails);
   };
 
   const handleSearch = (searchTerm: string) => {
@@ -152,7 +150,7 @@ const LandingPage = ({
                 <button
                   className={`${className}__randomButton`}
                   type="button"
-                  onClick={() => setRandomCocktails([])}
+                  onClick={clearRandomCocktails}
                 >
                   Clear
                 </button>

@@ -1,7 +1,5 @@
 .p-CocktailDetailPage {
-  width: min(100%, 1126px);
   padding: 40px 32px 56px;
-  box-sizing: border-box;
   text-align: left;
 
   h1,
@@ -61,7 +59,6 @@
     width: 100%;
     border-radius: 8px;
     box-shadow: var(--shadow);
-    object-fit: cover;
   }
 
   &__details {

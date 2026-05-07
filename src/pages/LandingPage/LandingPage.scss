@@ -1,7 +1,5 @@
 .p-LandingPage {
-  width: min(100%, 1126px);
   padding: 40px 32px 56px;
-  box-sizing: border-box;
 
   h1,
   h2 {
@@ -75,8 +73,6 @@
     font-weight: 650;
     color: var(--secondary-text);
     background: var(--secondary-bg);
-    cursor: pointer;
-    white-space: nowrap;
 
     &:hover:not(:disabled) {
       border-color: var(--secondary-text);

@@ -5,6 +5,9 @@ import { useCocktailById } from "../../hooks/useCocktailById";
 import "./CocktailDetailPage.scss";
 
 const className = "p-CocktailDetailPage";
+const ingredientKeyPrefix = "strIngredient";
+const measureKeyPrefix = "strMeasure";
+const hiddenMetaValues = ["Other", "Unknown"];
 
 type Ingredient = {
   ingredient: string;
@@ -12,21 +15,33 @@ type Ingredient = {
 };
 
 const getIngredients = (cocktail: Cocktail) => {
-  const ingredients: Ingredient[] = [];
+  const ingredientKeys = Object.keys(cocktail)
+    .filter((key) => key.startsWith(ingredientKeyPrefix))
+    .sort((firstKey, secondKey) => {
+      const firstIndex = Number(firstKey.replace(ingredientKeyPrefix, ""));
+      const secondIndex = Number(secondKey.replace(ingredientKeyPrefix, ""));
 
-  for (let index = 1; index <= 15; index += 1) {
-    const ingredient = cocktail[`strIngredient${index}`]?.trim();
-    const measurement = cocktail[`strMeasure${index}`]?.trim() ?? "";
+      return firstIndex - secondIndex;
+    });
 
-    if (ingredient) {
-      ingredients.push({
+  return ingredientKeys.reduce<Ingredient[]>((ingredients, ingredientKey) => {
+    const ingredientIndex = ingredientKey.replace(ingredientKeyPrefix, "");
+    const ingredient = cocktail[ingredientKey]?.trim();
+    const measurement =
+      cocktail[`${measureKeyPrefix}${ingredientIndex}`]?.trim() ?? "";
+
+    if (!ingredient) {
+      return ingredients;
+    }
+
+    return [
+      ...ingredients,
+      {
         ingredient,
         measurement,
-      });
-    }
-  }
-
-  return ingredients;
+      },
+    ];
+  }, []);
 };
 
 const CocktailDetailPage = () => {
@@ -38,7 +53,9 @@ const CocktailDetailPage = () => {
     useCocktailById(cocktailId);
   const ingredients = cocktail ? getIngredients(cocktail) : [];
   const cocktailMeta = cocktail
-    ? [cocktail.strCategory, cocktail.strGlass].filter(Boolean)
+    ? [cocktail.strCategory, cocktail.strAlcoholic, cocktail.strGlass].filter(
+        (value) => value && !hiddenMetaValues.includes(value),
+      )
     : [];
 
   return (
