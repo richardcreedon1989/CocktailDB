@@ -4,30 +4,36 @@ import LoadingSpinner from "../components/LoadingSpinner";
 import SearchInput from "../components/SearchInput";
 import { useCocktailsByName } from "../hooks/useCocktailsByName";
 import { useRandomCocktails } from "../hooks/useRandomCocktails";
-import { useSessionStorageState } from "../hooks/useSessionStorageState";
+import type { Dispatch, SetStateAction } from "react";
+import { useEffect, useState } from "react";
+import { useSearchParams } from "react-router-dom";
 import "./LandingPage.scss";
 
 const className = "p-LandingPage";
 
-const LandingPage = () => {
-  const [searchTerm, setSearchTerm] = useSessionStorageState(
-    "cocktail-search-term",
-    ""
-  );
-  const [submittedSearchTerm, setSubmittedSearchTerm] = useSessionStorageState(
-    "cocktail-submitted-search-term",
-    ""
-  );
-  const [randomCocktails, setRandomCocktails] = useSessionStorageState<
-    Cocktail[]
-  >("cocktail-random-cocktails", []);
+type LandingPageProps = {
+  randomCocktails: Cocktail[];
+  setRandomCocktails: Dispatch<SetStateAction<Cocktail[]>>;
+};
+
+const LandingPage = ({
+  randomCocktails,
+  setRandomCocktails,
+}: LandingPageProps) => {
+  const [searchParams, setSearchParams] = useSearchParams();
+  const searchedCocktailName = searchParams.get("search") ?? "";
+  const [searchTerm, setSearchTerm] = useState(searchedCocktailName);
+
+  useEffect(() => {
+    setSearchTerm(searchedCocktailName);
+  }, [searchedCocktailName]);
 
   const {
     data: cocktails = [],
     error,
     isError,
     isLoading,
-  } = useCocktailsByName(submittedSearchTerm);
+  } = useCocktailsByName(searchedCocktailName);
 
   const {
     error: randomCocktailsError,
@@ -37,12 +43,12 @@ const LandingPage = () => {
   } = useRandomCocktails();
 
   const hasNoResults =
-    submittedSearchTerm.trim().length > 0 &&
+    searchedCocktailName.trim().length > 0 &&
     !isLoading &&
     !isError &&
     cocktails.length === 0;
 
-  const hasSubmittedSearch = submittedSearchTerm.trim().length > 0;
+  const hasSubmittedSearch = searchedCocktailName.trim().length > 0;
   const shouldShowSearchResults =
     hasSubmittedSearch || isLoading || isError || hasNoResults;
   const hasRandomCocktails = randomCocktails.length > 0;
@@ -57,6 +63,16 @@ const LandingPage = () => {
       ...currentRandomCocktails,
       ...nextRandomCocktails,
     ]);
+  };
+
+  const handleSearch = () => {
+    const nextSearchTerm = searchTerm.trim();
+
+    if (!nextSearchTerm) {
+      return;
+    }
+
+    setSearchParams({ search: nextSearchTerm });
   };
 
   return (
@@ -77,7 +93,7 @@ const LandingPage = () => {
           <SearchInput
             value={searchTerm}
             setSearchTerm={setSearchTerm}
-            onSearch={() => setSubmittedSearchTerm(searchTerm)}
+            onSearch={handleSearch}
           />
         </div>
         <div className={`${className}__randomControls`}>

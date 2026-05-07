@@ -4,6 +4,28 @@
   box-sizing: border-box;
   text-align: left;
 
+  h1,
+  h2 {
+    margin: 0;
+    font-family: var(--heading);
+    font-weight: 650;
+    color: var(--text-h);
+  }
+
+  h1 {
+    font-size: 40px;
+    line-height: 1.1;
+  }
+
+  h2 {
+    font-size: 22px;
+    line-height: 1.18;
+  }
+
+  p {
+    margin: 0;
+  }
+
   &__topBar {
     display: flex;
     gap: 24px;
@@ -83,6 +105,14 @@
 @media (max-width: 760px) {
   .p-CocktailDetailPage {
     padding: 24px 20px 40px;
+
+    h1 {
+      font-size: 32px;
+    }
+
+    h2 {
+      font-size: 20px;
+    }
 
     &__content {
       grid-template-columns: 1fr;

@@ -3,6 +3,28 @@
   padding: 40px 32px 56px;
   box-sizing: border-box;
 
+  h1,
+  h2 {
+    margin: 0;
+    font-family: var(--heading);
+    font-weight: 650;
+    color: var(--text-h);
+  }
+
+  h1 {
+    font-size: 40px;
+    line-height: 1.1;
+  }
+
+  h2 {
+    font-size: 22px;
+    line-height: 1.18;
+  }
+
+  p {
+    margin: 0;
+  }
+
   &__header {
     max-width: 680px;
     margin-bottom: 28px;
@@ -105,6 +127,14 @@
 @media (max-width: 640px) {
   .p-LandingPage {
     padding: 24px 20px 40px;
+
+    h1 {
+      font-size: 32px;
+    }
+
+    h2 {
+      font-size: 20px;
+    }
   }
 
   .p-LandingPage__controls {

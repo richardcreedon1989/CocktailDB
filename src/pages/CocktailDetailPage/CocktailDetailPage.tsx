@@ -1,4 +1,4 @@
-import { Link, useParams } from "react-router-dom";
+import { Link, useLocation, useParams } from "react-router-dom";
 import LoadingSpinner from "../../components/LoadingSpinner";
 import type { Cocktail } from "../../api/cocktails";
 import { useCocktailById } from "../../hooks/useCocktailById";
@@ -31,6 +31,9 @@ const getIngredients = (cocktail: Cocktail) => {
 
 const CocktailDetailPage = () => {
   const { cocktailId } = useParams();
+  const location = useLocation();
+  const backPath =
+    (location.state as { from?: string } | null)?.from ?? "/";
   const { data: cocktail, error, isError, isLoading } =
     useCocktailById(cocktailId);
   const ingredients = cocktail ? getIngredients(cocktail) : [];
@@ -41,7 +44,7 @@ const CocktailDetailPage = () => {
   return (
     <main className={className}>
       <div className={`${className}__topBar`}>
-        <Link className={`${className}__backLink`} to="/">
+        <Link className={`${className}__backLink`} to={backPath}>
           <span aria-hidden="true">←</span>
           Back to search
         </Link>
