@@ -2,6 +2,12 @@
 
 A React cocktail search and randomiser app built with TheCocktailDB API.
 
+## Development Note
+
+This application was built with support from Codex CLI, with the author reviewing the implementation in detail throughout. The work was developed iteratively, piece by piece, rather than generated in a single pass.
+
+Changes were mostly reviewed as they were raised, with pull requests checked and merged throughout the build process. The final submission was also reviewed carefully by the author before delivery and edited where required.
+
 ## What The App Does
 
 - Search cocktails by name.
