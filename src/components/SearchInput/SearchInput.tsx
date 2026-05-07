@@ -1,30 +1,30 @@
-import type { Dispatch, SetStateAction } from "react";
+import { useState } from "react";
 import "./SearchInput.scss";
 
 const className = "c-SearchInput";
 
 type SearchInputProps = {
-  value: string;
-  setSearchTerm: Dispatch<SetStateAction<string>>;
-  onSearch: () => void;
+  initialValue: string;
+  onSearch: (searchTerm: string) => void;
 };
 
-const SearchInput = ({ value, setSearchTerm, onSearch }: SearchInputProps) => {
-  const isSearchDisabled = value.trim().length === 0;
+const SearchInput = ({ initialValue, onSearch }: SearchInputProps) => {
+  const [searchTerm, setSearchTerm] = useState(initialValue);
+  const isSearchDisabled = searchTerm.trim().length === 0;
 
   return (
     <form
       className={className}
       onSubmit={(event) => {
         event.preventDefault();
-        onSearch();
+        onSearch(searchTerm);
       }}
     >
       <input
         className={`${className}__input`}
         type="text"
         placeholder="Search for cocktails..."
-        value={value}
+        value={searchTerm}
         onChange={(event) => setSearchTerm(event.target.value)}
       />
       <button

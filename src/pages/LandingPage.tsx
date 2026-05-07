@@ -5,7 +5,6 @@ import SearchInput from "../components/SearchInput";
 import { useCocktailsByName } from "../hooks/useCocktailsByName";
 import { useRandomCocktails } from "../hooks/useRandomCocktails";
 import type { Dispatch, SetStateAction } from "react";
-import { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import "./LandingPage.scss";
 
@@ -22,21 +21,14 @@ const LandingPage = ({
 }: LandingPageProps) => {
   const [searchParams, setSearchParams] = useSearchParams();
   const searchedCocktailName = searchParams.get("search") ?? "";
-  const [searchTerm, setSearchTerm] = useState(searchedCocktailName);
-
-  useEffect(() => {
-    setSearchTerm(searchedCocktailName);
-  }, [searchedCocktailName]);
 
   const {
     data: cocktails = [],
-    error,
     isError,
     isLoading,
   } = useCocktailsByName(searchedCocktailName);
 
   const {
-    error: randomCocktailsError,
     isError: isRandomCocktailsError,
     isPending: isRandomCocktailsPending,
     mutateAsync: getRandomCocktails,
@@ -65,7 +57,7 @@ const LandingPage = ({
     ]);
   };
 
-  const handleSearch = () => {
+  const handleSearch = (searchTerm: string) => {
     const nextSearchTerm = searchTerm.trim();
 
     if (!nextSearchTerm) {
@@ -91,8 +83,8 @@ const LandingPage = ({
       >
         <div className={`${className}__searchControls`}>
           <SearchInput
-            value={searchTerm}
-            setSearchTerm={setSearchTerm}
+            key={searchedCocktailName}
+            initialValue={searchedCocktailName}
             onSearch={handleSearch}
           />
         </div>
@@ -118,16 +110,20 @@ const LandingPage = ({
           aria-label="Search results"
         >
           <h2>{isLoading ? "Searching cocktails" : searchResultsHeading}</h2>
-          {isLoading && <LoadingSpinner label="Searching" />}
-          {isError && (
-            <p className={`${className}__message`}>{error.message}</p>
-          )}
-          {hasNoResults && (
-            <div className={`${className}__emptyState`}>
-              <span aria-hidden="true">🍸</span>
-              <p>Try again, no cocktails match.</p>
-            </div>
-          )}
+          <div aria-live="polite" aria-atomic="true">
+            {isLoading && <LoadingSpinner label="Searching" />}
+            {isError && (
+              <p className={`${className}__message`}>
+                We couldn't search cocktails right now. Please try again.
+              </p>
+            )}
+            {hasNoResults && (
+              <div className={`${className}__emptyState`}>
+                <span aria-hidden="true">🍸</span>
+                <p>Try again, no cocktails match.</p>
+              </div>
+            )}
+          </div>
           <CocktailGrid cocktails={cocktails} />
         </section>
       )}
@@ -163,11 +159,13 @@ const LandingPage = ({
               </div>
             </div>
           )}
-          {isRandomCocktailsError && (
-            <p className={`${className}__message`}>
-              {randomCocktailsError.message}
-            </p>
-          )}
+          <div aria-live="polite" aria-atomic="true">
+            {isRandomCocktailsError && (
+              <p className={`${className}__message`}>
+                We couldn't generate random cocktails. Please try again.
+              </p>
+            )}
+          </div>
           <CocktailGrid cocktails={randomCocktails} />
         </section>
       )}

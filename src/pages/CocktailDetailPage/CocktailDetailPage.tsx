@@ -34,7 +34,7 @@ const CocktailDetailPage = () => {
   const location = useLocation();
   const backPath =
     (location.state as { from?: string } | null)?.from ?? "/";
-  const { data: cocktail, error, isError, isLoading } =
+  const { data: cocktail, isError, isLoading } =
     useCocktailById(cocktailId);
   const ingredients = cocktail ? getIngredients(cocktail) : [];
   const cocktailMeta = cocktail
@@ -49,10 +49,16 @@ const CocktailDetailPage = () => {
           Back to search
         </Link>
 
-        {isLoading && <LoadingSpinner />}
+        <div aria-live="polite" aria-atomic="true">
+          {isLoading && <LoadingSpinner />}
+        </div>
       </div>
-      {isError && <p>{error.message}</p>}
-      {!isLoading && !isError && !cocktail && <p>Cocktail not found.</p>}
+      <div aria-live="polite" aria-atomic="true">
+        {isError && (
+          <p>We couldn't load this cocktail. Please go back and try again.</p>
+        )}
+        {!isLoading && !isError && !cocktail && <p>Cocktail not found.</p>}
+      </div>
 
       {cocktail && (
         <article className={`${className}__content`}>
